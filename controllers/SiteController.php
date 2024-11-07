@@ -65,7 +65,7 @@ class SiteController extends Controller
         $userContext = Yii::$app->user->identity;
         $customer = Customer::findOne($userContext['id_user']); 
         return $this->render('index', [
-            'customer' =>  $customer,
+            'user' =>  $customer,
         ]);
     }
 
