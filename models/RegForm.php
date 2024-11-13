@@ -6,8 +6,7 @@ use Yii;
 use yii\base\Model;
 class RegForm extends Model
 {
-    public  $id_user,
-            $username,
+    public  $username,
             $password,
             $confirmPassword,
             $id_role = 1,
@@ -28,7 +27,6 @@ class RegForm extends Model
             [['username', 'password', 'confirmPassword', 'email', 'telephone','agree'], 'required'],
             // password is validated by validatePassword()
             [['id_role'], 'integer'],
-            ['password', 'validatePassword'],
             [['name', 'surname','phone', 'email', 'telephone', 'passwordConfirm'], 'string', 'max'=> 255],
             [['username'], 'unique', 'message' => 'Такой логин уже есть'],
             ['email', 'email', 'message' => 'Некорреткная почта'],
@@ -37,7 +35,7 @@ class RegForm extends Model
             ['username', 'match', 'pattern' => '/^[A-Za-z0-9]{1,}$/u', 'message' => 'Только латиница и цифры'],
             ['password', 'string', 'min' => 6],
             ['passwordConfirm', 'compare', 'compareAttribute' => 'password', 'message' => 'Пароли должны совпадать'],
-            ['agree', 'bolean'],
+            ['agree', 'boolean'],
             ['agree', 'compare', 'compareValue' => true, 'message' => 'Необходимо согласиться для обработки ваших персональных данных'],
 
         ];
@@ -50,34 +48,11 @@ class RegForm extends Model
             'surname' => 'Фамилия',
             'passwordConfirm' => 'Повторить пароль',
             'agree' => 'Согласие на обработку данных',
+            'email'=> 'Почта',
+            'telephone' => 'Телефон',
+            'id_role'=>'Id role'
         ];
     }
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validatePassword($attribute, $params)
-    {
-  
-        
-    }
-
-
-
-    /**
-     * Finds user by [[username]]
-     *
-     * @return User|null
-     */
-    public function getUser()
-    {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
-        }
-
-        return $this->_user;
-    }
+   
+    
 }

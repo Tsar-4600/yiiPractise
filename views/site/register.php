@@ -5,6 +5,7 @@
 
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\widgets\MaskedInput;
 
 $this->title = 'Registration';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,18 +25,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
         ],
     ]); ?>
+        <?= $form->field($regData, 'username')->textInput(); ?>
+        <?= $form->field($regData, 'password')->passwordInput(); ?>
+        <?= $form->field($regData, 'confirmPassword')->passwordInput(); ?>
+        <?= $form->field($regData, 'name')->textInput(); ?>
+        <?= $form->field($regData, 'surname')->textInput(); ?>
+        <?= $form->field($regData, 'email')->input('email');?>
+        <?= $form->field($regData, 'telephone')->widget(MaskedInput::className(),['mask' => '+7 (999) 999-99-99'] )->textInput(['placeholder' => '+7 (999) 999-99-99', 'class' =>'']); ?>
+        <?= $form->field($regData, 'agree')->checkbox(); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"offset-lg-1 col-lg-3 custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
 
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Regsiter', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
             </div>
         </div>
 
