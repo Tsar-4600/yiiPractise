@@ -10,8 +10,14 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Customer;
+use app\models\Film;
 use app\models\RegForm;
 use app\models\User;
+use app\models\Session;
+
+
+
+use Codeception\Lib\Interfaces\ActiveRecord;
 
 class SiteController extends Controller
 {
@@ -65,7 +71,7 @@ class SiteController extends Controller
     public function actionIndex()
     {   
         $userContext = Yii::$app->user->identity;
-        $customer = Customer::find()->where(['id_user' => $userContext->id_user])->one();;
+        $customer = Customer::find()->where(['id_user' => $userContext->id_user])->one();
         return $this->render('index', [
             'user' =>  $customer,
         ]);
@@ -167,5 +173,15 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    public function actionCatalog(){
+        
+        $filmModel = Film::find()
+            // ->select(['Film.*', 'Genre.name AS genre_name'])
+            ->limit(20)
+            ->all();
+        return $this->render('catalog', [
+            'catalogfilm' => $filmModel,
+        ]);
     }
 }
