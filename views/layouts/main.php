@@ -18,6 +18,7 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -34,16 +35,22 @@ AppAsset::register($this);
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Catalog', 'url' => ['/site/catalog']],
-           
+            ['label' => 'Афиша', 'url' => ['/site/index']],
+            ['label' => 'О нас', 'url' => ['/site/about']],
+            ['label' => 'Где нас найти', 'url' => ['site/location']],
+            ['label' => 'Контакты', 'url' => ['/site/contact']],
+            Yii::$app->user->identity->id_role == 1?(
+                ['label' => 'Личный кабинет', 'url' => ['/admin/index']]
+            ) : (
+                '<li>'
+                .'</li>'
+            ),
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Логин', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
@@ -53,8 +60,23 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
+            ),
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Регистрация', 'url' => ['/site/register']]
+            ) : (
+                '<li>'
+                .'</li>'
+            ),
+          
+            Yii::$app->user->identity->id_role == 2?(
+                ['label' => 'Админка', 'url' => ['/admin/index']]
+            ) : (
+                '<li>'
+                .'</li>'
             )
+          
         ],
+       
     ]);
     NavBar::end();
     ?>
@@ -79,5 +101,6 @@ AppAsset::register($this);
 
 <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage() ?>

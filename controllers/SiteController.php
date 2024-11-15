@@ -70,41 +70,71 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {   
-        $userContext = Yii::$app->user->identity;
-        $customer = Customer::find()->where(['id_user' => $userContext->id_user])->one();
+       
+        //формирование фильмов для афиши
+        $filmModel = Film::find()
+        ->limit(20)
+        ->all();
+        
+
+         //формирование пользователя или покупателя
+         $userContext = Yii::$app->user->identity;
+         if($userContext === null)
+         {
+            return $this->render('index', [
+                'catalogFilm' => $filmModel,
+            ]);
+         }
+         $customer = Customer::find()->where(['id_user' => $userContext->id_user])->one();
+         if($customer === null)
+         {
+             return $this->render('index', [
+                'catalogFilm' => $filmModel,
+            ]);
+         }
+
         return $this->render('index', [
             'user' =>  $customer,
+            'catalogFilm' => $filmModel,
         ]);
     }
     public function actionRegister(){
         $model = new RegForm();
         if($model->load(Yii::$app->request->post())){
-            $userModel = new User();
-            $userModel->username = $model->username;
-            $userModel->password = $model->password;
-            $userModel->id_role = $model->id_role;
-            $userModel->accessToken = "asdsadadsadadadad";
-            $userModel->authKey = "asdadsa21313222145";
-            var_dump($userModel);
-            if($userModel->save()){
-                $customerModel = new Customer();
-                $customerModel->id_user = $userModel->id_user;
-                $customerModel->name = $model->name;
-                $customerModel->surname = $model->surname;
-                $customerModel->email = $model->email;
-                $customerModel->telephone = $model->telephone;
-                var_dump($customerModel);
-                if($customerModel->save()){
-                    Yii::$app->session->setFlash('success', 'Регистрация прошла успешно!');
-                    return $this->redirect(['site/index']);
+            if($model->password == $model->confirmPassword){
+                $userModel = new User();
+                $userModel->username = $model->username;
+                $userModel->password = $model->password;
+                $userModel->id_role = $model->id_role;
+                $userModel->accessToken = "asdsadadsadadadad";
+                $userModel->authKey = "asdadsa21313222145";
+                var_dump($userModel);
+                if($userModel->save()){
+                    $customerModel = new Customer();
+                    $customerModel->id_user = $userModel->id_user;
+                    $customerModel->name = $model->name;
+                    $customerModel->surname = $model->surname;
+                    $customerModel->email = $model->email;
+                    $customerModel->telephone = $model->telephone;
+                    var_dump($customerModel);
+                    if($customerModel->save()){
+                        Yii::$app->session->setFlash('success', 'Регистрация прошла успешно!');
+                        return $this->redirect(['site/index']);
+                    }
+                    else{
+                        echo "<br><br><br>Что-то пошло не так с записью customer";
+                    }
                 }
                 else{
-                    echo "<br><br><br>Что-то пошло не так с записью customer";
+                    echo "<br><br><br>Что пошло не так с записью юзера";
                 }
+
+
             }
             else{
-                echo "<br><br><br>Что пошло не так с записью юзера";
+              Yii::$app->session->setFlash('error', "Не совпадают пароли пользователя");
             }
+                
         }
        
         return $this->render('register.php', [
@@ -174,14 +204,8 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-    public function actionCatalog(){
-        
-        $filmModel = Film::find()
-            // ->select(['Film.*', 'Genre.name AS genre_name'])
-            ->limit(20)
-            ->all();
-        return $this->render('catalog', [
-            'catalogfilm' => $filmModel,
-        ]);
+    public function actionLocation()
+    {
+        return $this->render('location');
     }
 }
