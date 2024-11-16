@@ -44,7 +44,7 @@ AppAsset::register($this);
             ['label' => 'Где нас найти', 'url' => ['site/location']],
             ['label' => 'Контакты', 'url' => ['/site/contact']],
             Yii::$app->user->identity->id_role == 1?(
-                ['label' => 'Личный кабинет', 'url' => ['/admin/index']]
+                ['label' => 'Личный кабинет', 'url' => ['/lk/index']]
             ) : (
                 '<li>'
                 .'</li>'

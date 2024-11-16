@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Film $model */
+/** @var app\models\Orders $model */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
+$this->title = $model->id_order;
+$this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="film-view">
+<div class="orders-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_film' => $model->id_film], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_film' => $model->id_film], [
+        <?= Html::a('Update', ['update', 'id_order' => $model->id_order], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id_order' => $model->id_order], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,11 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_film',
-            'name',
-            'id_genre',
-            'photo_path',
+            'id_order',
+            'id_session',
+            'id_customer',
             'price',
+            'time',
+            'status_order',
         ],
     ]) ?>
 

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Управление юзерами', ['/user'], ['class' => 'btn btn-success']); ?>
         <?= Html::a('Управление жанрами', ['/genre'], ['class' => 'btn btn-success']); ?>
         <?= Html::a('Управление фильмами', ['/film'], ['class' => 'btn btn-success']); ?>
-        <?= Html::a('Заказы', ['/order'], ['class' => 'btn btn-success']); ?>
+        <?= Html::a('Заказы', ['/orders'], ['class' => 'btn btn-success']); ?>
 
     </p>
 </div>

@@ -208,4 +208,7 @@ class SiteController extends Controller
     {
         return $this->render('location');
     }
+    public function actionAddfilm(){
+        return $this->redirect(['site/about']);
+    }
 }

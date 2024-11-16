@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\FilmSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Фильмы';
+$this->title = 'Films';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="film-index">
@@ -30,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             [
-               'attribute'=> 'id_genre',
-               'value' => function($model)
-               {
-                    return $model->genre->name;
-               }
+                'attribute'=> 'id_genre',
+                'value' => function($model)
+                {
+                        return $model->genre->name;
+                }
             ],
             [
                 'attribute' => 'photo_path',
@@ -46,6 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'style' => 'width:250px; height:auto;' // Установите ширину изображения, чтобы оно помещалось в таблицу
                     ]);
                 },
+            ],
+            [
+                'attribute' => 'price',
+                'value' => function ($model){
+                    return $model->price . '₽';      
+                }
             ],
             [
                 'class' => ActionColumn::className(),

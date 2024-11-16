@@ -11,6 +11,7 @@ use Yii;
  * @property string $name
  * @property int $id_genre
  * @property string|null $photo_path
+ * @property int|null $price
  *
  * @property Genre $genre
  * @property SessionFilm[] $sessionFilms
@@ -32,7 +33,7 @@ class Film extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'id_genre'], 'required'],
-            [['id_genre'], 'integer'],
+            [['id_genre', 'price'], 'integer'],
             [['name', 'photo_path'], 'string', 'max' => 255],
             [['id_genre'], 'exist', 'skipOnError' => true, 'targetClass' => Genre::class, 'targetAttribute' => ['id_genre' => 'id_genre']],
         ];
@@ -48,6 +49,7 @@ class Film extends \yii\db\ActiveRecord
             'name' => 'Name',
             'id_genre' => 'Id Genre',
             'photo_path' => 'Photo Path',
+            'price' => 'Price',
         ];
     }
 

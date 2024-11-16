@@ -83,3 +83,14 @@ a.desc:after {
     outline: none;
 }
 /* site/index.php */
+.carousel-inner{
+    max-width: 600px;
+    align-items: center;
+    background-color: rgb(209, 204, 204);
+}
+.carousel.slide{
+    max-width: 600px;
+}
+.slider-block{
+    margin-bottom: 50px;
+}

@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Film;
+use app\models\Orders;
 
 /**
- * FilmSearch represents the model behind the search form of `app\models\Film`.
+ * OrdersSearch represents the model behind the search form of `app\models\Orders`.
  */
-class FilmSearch extends Film
+class OrdersSearch extends Orders
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class FilmSearch extends Film
     public function rules()
     {
         return [
-            [['id_film', 'id_genre', 'price'], 'integer'],
-            [['name', 'photo_path'], 'safe'],
+            [['id_order', 'id_session', 'id_customer'], 'integer'],
+            [['price'], 'number'],
+            [['time', 'status_order'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class FilmSearch extends Film
      */
     public function search($params)
     {
-        $query = Film::find();
+        $query = Orders::find();
 
         // add conditions that should always apply here
 
@@ -58,13 +59,14 @@ class FilmSearch extends Film
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_film' => $this->id_film,
-            'id_genre' => $this->id_genre,
+            'id_order' => $this->id_order,
+            'id_session' => $this->id_session,
+            'id_customer' => $this->id_customer,
             'price' => $this->price,
+            'time' => $this->time,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'photo_path', $this->photo_path]);
+        $query->andFilterWhere(['like', 'status_order', $this->status_order]);
 
         return $dataProvider;
     }
